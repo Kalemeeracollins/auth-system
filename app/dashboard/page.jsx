@@ -1,13 +1,19 @@
-'use client'
+'use client';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 const Dashboard = () => {
   const [user, setUser] = useState(null);
+  const router = useRouter();
 
   useEffect(() => {
     const currentUser = JSON.parse(localStorage.getItem('current_user'));
-    setUser(currentUser);
-  }, []);
+    if (!currentUser) {
+      router.push('/login'); // Redirect to login page if user is not found
+    } else {
+      setUser(currentUser);
+    }
+  }, [router]);
 
   return (
     <div>
